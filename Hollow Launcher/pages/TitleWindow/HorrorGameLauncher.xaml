@@ -1,0 +1,19 @@
+﻿<Page x:Class="Hollow_Launcher.pages.TitleWindow.HorrorGameLauncher"
+      Loaded="Page_Loaded"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Hollow_Launcher.windows"
+      mc:Ignorable="d" 
+      d:DesignHeight="576" d:DesignWidth="1080"
+      Title="HorrorGameLauncher">
+
+    <Grid>
+        <Image Stretch="UniformToFill" Source="/images/LauncherBackground.png" HorizontalAlignment="Right"/>
+        <TextBlock Name="VersionText" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="20" Foreground="White" Margin="0, 0, 5, 0" Text="0.0.0"/>
+        <Button Name="PlayButton" Content="Checking For Updates" Click="PlayButton_Click" Height="60" FontSize="28" FontWeight="Bold" Margin="0,0,0,15" VerticalAlignment="Bottom" HorizontalAlignment="Center" MinWidth="150" Background="White"/>
+        <Button Name="MenuButton" Content="Menu" Click="MenuButton_Click" Height="60" FontSize="28" FontWeight="Bold" Margin="10,0,0,15" VerticalAlignment="Bottom" HorizontalAlignment="Left" MinWidth="150" Background="White"/>
+        <TextBlock Name="GameTitle" VerticalAlignment="Top" HorizontalAlignment="Center" Text="Horror Game" Height="96" Width="338" FontSize="72" TextAlignment="Center" FontFamily="Chiller" FontWeight="Bold" Foreground="#FF9C0000"/>
+    </Grid>
+</Page>
