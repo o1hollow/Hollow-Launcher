@@ -29,6 +29,7 @@ namespace Hollow_Launcher.pages.TitleWindow
         private string versionFile;
         private string gameZip;
         private string gameExe;
+        private string build;
 
         private LauncherStatus _status;
         internal LauncherStatus Status
@@ -65,6 +66,7 @@ namespace Hollow_Launcher.pages.TitleWindow
             versionFile = Path.Combine(rootPath, "Version.txt");
             gameZip = Path.Combine(rootPath, "Build.zip");
             gameExe = Path.Combine(rootPath, "Build", "Horror Game.exe");
+            build = Path.Combine(rootPath, "Build");
         }
 
         private void CheckForUpdates()
@@ -77,10 +79,11 @@ namespace Hollow_Launcher.pages.TitleWindow
                 try
                 {
                     WebClient webClient = new WebClient();
-                    Version onlineVersion = new Version(webClient.DownloadString("https://zipline.local.jptlabs.com/raw/Version.txt?download=true"));
+                    Version onlineVersion = new Version(webClient.DownloadString("https://www.dropbox.com/scl/fi/kv3t54gibavq5m7lzeavs/Version.txt?rlkey=y982jyrcdsfiq8t6k0o8icqtp&st=yb2vi24i&dl=1"));
 
                     if (onlineVersion.IsDifferentThan(localVersion))
                     {
+                        Directory.Delete(build, true);
                         InstallGameFiles(true, onlineVersion);
                     }
                     else
@@ -112,11 +115,20 @@ namespace Hollow_Launcher.pages.TitleWindow
                 else
                 {
                     Status = LauncherStatus.downloadingGame;
-                    _onlineVersion = new Version(webClient.DownloadString("https://zipline.local.jptlabs.com/raw/Version.txt?download=true"));
+                    _onlineVersion = new Version(webClient.DownloadString("https://www.dropbox.com/scl/fi/kv3t54gibavq5m7lzeavs/Version.txt?rlkey=y982jyrcdsfiq8t6k0o8icqtp&st=yb2vi24i&dl=1"));
                 }
 
-                webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadingGameCompletedCallback);
-                webClient.DownloadFileAsync(new Uri("https://zipline.local.jptlabs.com/u/Build.zip"), gameZip, _onlineVersion);
+                // Show and reset progress bar
+                DownloadProgressBar.Visibility = Visibility.Visible;
+                DownloadProgressBar.Value = 0;
+
+                webClient.DownloadProgressChanged += WebClient_DownloadProgressChanged;
+                webClient.DownloadFileCompleted += DownloadingGameCompletedCallback;
+                webClient.DownloadFileAsync(
+                    new Uri("https://www.dropbox.com/scl/fi/ex41xtnnhuee8sz5cjwrx/Build.zip?rlkey=95a7a60bvbbnaavuxktob6avj&st=5vwn6g48&dl=1"),
+                    gameZip,
+                    _onlineVersion
+                );
             }
             catch (Exception ex)
             {
@@ -125,10 +137,18 @@ namespace Hollow_Launcher.pages.TitleWindow
             }
         }
 
+        private void WebClient_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            DownloadProgressBar.Value = e.ProgressPercentage;
+        }
+
         private void DownloadingGameCompletedCallback(object sender, AsyncCompletedEventArgs e)
         {
             try
             {
+                DownloadProgressBar.Visibility = Visibility.Collapsed;
+
+
                 string onlineVersion = ((Version)e.UserState).ToString();
                 ZipFile.ExtractToDirectory(gameZip, rootPath);
                 File.Delete(gameZip);
@@ -144,6 +164,7 @@ namespace Hollow_Launcher.pages.TitleWindow
                 MessageBox.Show($"Error finishing download: {ex}");
             }
         }
+
 
         private void Page_Loaded(object sender, EventArgs e)
         {

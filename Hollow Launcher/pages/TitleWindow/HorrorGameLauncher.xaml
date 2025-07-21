@@ -15,5 +15,19 @@
         <Button Name="PlayButton" Content="Checking For Updates" Click="PlayButton_Click" Height="60" FontSize="28" FontWeight="Bold" Margin="0,0,0,15" VerticalAlignment="Bottom" HorizontalAlignment="Center" MinWidth="150" Background="White"/>
         <Button Name="MenuButton" Content="Menu" Click="MenuButton_Click" Height="60" FontSize="28" FontWeight="Bold" Margin="10,0,0,15" VerticalAlignment="Bottom" HorizontalAlignment="Left" MinWidth="150" Background="White"/>
         <TextBlock Name="GameTitle" VerticalAlignment="Top" HorizontalAlignment="Center" Text="Horror Game" Height="96" Width="338" FontSize="72" TextAlignment="Center" FontFamily="Chiller" FontWeight="Bold" Foreground="#FF9C0000"/>
+        <Image Source="/images/black.jpg" HorizontalAlignment="Right" VerticalAlignment="Top" Height="96" Width="247"/>
+        <TextBlock Name="Error" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="75" Width="224" FontSize="22" Margin="165,0,0,0" Foreground="White"/>
+
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,77" >
+            <ProgressBar x:Name="DownloadProgressBar"
+                 Height="16"
+                 Minimum="0"
+                 Maximum="100"
+                 Width="283"
+                 Value="0"
+                 Visibility="Collapsed"
+                 Background="LightGray"
+                 Foreground="Green"/>
+        </StackPanel>
     </Grid>
 </Page>
